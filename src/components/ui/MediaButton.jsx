@@ -1,27 +1,40 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
 
 export const MediaButton = ({ label, mediaUrl }) => {
+  const videoRef = useRef(null);
   const isVideo = /\.(mp4|webm)$/i.test(mediaUrl);
 
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
   return (
-    <motion.button
-      className="relative overflow-hidden rounded-full px-6 py-3 text-black font-medium bg-[#D3FD50] hover:bg-[#b8e03e] group shadow-lg transition-colors inline-flex items-center gap-3"
-      whileHover="hover"
-      initial="rest"
-      animate="rest"
+    <button
+      className="relative overflow-hidden rounded-full px-6 py-3 text-black font-medium bg-[#D3FD50] group shadow-lg inline-flex items-center gap-3"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isVideo ? (
-        <motion.video
+        <video
+          ref={videoRef}
           className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           src={mediaUrl}
           muted
           loop
           playsInline
-          autoPlay
         />
       ) : (
-        <motion.img
+        <img
           className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           src={mediaUrl}
           alt="Background"
@@ -33,6 +46,6 @@ export const MediaButton = ({ label, mediaUrl }) => {
       <span className="relative z-20 font-[font2] group-hover:text-white transition-colors duration-300">
         {label}
       </span>
-    </motion.button>
+    </button>
   );
 };
