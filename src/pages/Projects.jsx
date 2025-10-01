@@ -1,4 +1,4 @@
-import { useGSAP } from '@gsap/react'
+/import { useGSAP } from '@gsap/react'
 import VideoGrid from '../components/projects/VideoGrid'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
