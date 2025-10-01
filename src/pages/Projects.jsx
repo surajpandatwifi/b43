@@ -1,9 +1,9 @@
-/import { useGSAP } from '@gsap/react'
-import VideoGrid from '../components/projects/VideoGrid'
+import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
 import PageWrapper from '../components/common/PageWrapper'
 import { Link } from 'react-router-dom'
+import PortfolioShowcase from '../components/projects/PortfolioShowcase'
 
 /**
  * Projects component - Now displays YouTube videos in a responsive grid
@@ -127,32 +127,18 @@ const Projects = () => {
 
       <div className='projects-content space-y-16 sm:space-y-24 lg:space-y-32'>
         {/* Teasers Section */}
-        <section className='floating-panel-dark space-y-8 sm:space-y-10 lg:space-y-12 flex flex-col items-center'>
-          <h2 className='section-title font-[font2] text-3xl sm:text-4xl lg:text-5xl xl:text-6xl uppercase text-center text-layer-2 text-glow'>
-            Teasers
-          </h2>
-          <div className="w-full max-w-6xl">
-            <VideoGrid 
-              videos={teasers} 
-              gridCols="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-              aspectRatio="aspect-video"
-            />
-          </div>
-        </section>
+        <PortfolioShowcase
+          videos={teasers}
+          category="Teasers"
+          title="Teasers"
+        />
 
         {/* Highlights Section */}
-        <section className='floating-panel-dark space-y-8 sm:space-y-10 lg:space-y-12 flex flex-col items-center'>
-          <h2 className='section-title font-[font2] text-3xl sm:text-4xl lg:text-5xl xl:text-6xl uppercase text-center text-layer-2 text-glow'>
-            Highlights
-          </h2>
-          <div className="w-full max-w-7xl">
-            <VideoGrid 
-              videos={highlights} 
-              gridCols="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-              aspectRatio="aspect-video"
-            />
-          </div>
-        </section>
+        <PortfolioShowcase
+          videos={highlights}
+          category="Highlights"
+          title="Highlights"
+        />
       </div>
       </div>
     </PageWrapper>

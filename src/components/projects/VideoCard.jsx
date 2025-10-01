@@ -2,14 +2,16 @@ import React, { useState, useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 
-const VideoCard = ({ videoId, aspectRatio, index }) => {
+const VideoCard = ({ videoId, aspectRatio, index, enableAutoplay = false, registerElement }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false)
   const cardRef = useRef(null)
+  const iframeRef = useRef(null)
 
-  // YouTube embed + thumbnail URLs
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?controls=1&modestbranding=1&rel=0&showinfo=0`
+  // YouTube embed + thumbnail URLs with optional autoplay
+  const autoplayParams = enableAutoplay ? '&autoplay=1&mute=1' : ''
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?controls=1&modestbranding=1&rel=0&showinfo=0${autoplayParams}`
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
   const fallbackThumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
 
@@ -31,7 +33,13 @@ const VideoCard = ({ videoId, aspectRatio, index }) => {
     }
   }, [index])
 
-  const handleIframeLoad = () => setIsLoaded(true)
+  const handleIframeLoad = () => {
+    setIsLoaded(true)
+    if (registerElement && iframeRef.current) {
+      registerElement(iframeRef.current)
+    }
+  }
+
   const handleIframeError = () => setHasError(true)
   const handleThumbnailLoad = () => setThumbnailLoaded(true)
 
@@ -74,6 +82,7 @@ const VideoCard = ({ videoId, aspectRatio, index }) => {
       {/* Video Embed */}
       {!hasError && (
         <iframe
+          ref={iframeRef}
           className={`absolute top-0 left-0 w-full h-full transition-opacity duration-300 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
