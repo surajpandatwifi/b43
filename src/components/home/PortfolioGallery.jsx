@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import VideoThumbnailCard from './VideoThumbnailCard';
 import VideoModal from './VideoModal';
+import { MediaButton } from '../ui/MediaButton';
 import {
   Carousel,
   CarouselContent,
@@ -66,12 +67,8 @@ function PortfolioGallery({
               {title}
             </h2>
 
-            <Link
-              to={archiveButton.href}
-              className="inline-flex items-center gap-3 bg-[#D3FD50] text-black px-6 py-3 rounded-full font-medium hover:bg-[#b8e03e] transition-colors group mb-20"
-            >
-              <span className="font-[font2]">{archiveButton.text}</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <Link to={archiveButton.href} className="mb-20 inline-block">
+              <MediaButton label={archiveButton.text} mediaUrl="/button.webm" />
             </Link>
           </div>
 
